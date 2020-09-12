@@ -6,39 +6,39 @@
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 #define SERVO_FREQ 60 // Analog servos run at ~50 Hz updates
-#define SERVO_Harakter ((float)1000000/SERVO_FREQ/4096.0) // кол-во микросекунд которое требуется подавать сигнал на 1 имульс драйвера. Зависит от частоты сигнала и разрешающей способности платы управления
+#define SERVO_Harakter ((float)1000000/SERVO_FREQ/4096.0) // РєРѕР»-РІРѕ РјРёРєСЂРѕСЃРµРєСѓРЅРґ РєРѕС‚РѕСЂРѕРµ С‚СЂРµР±СѓРµС‚СЃСЏ РїРѕРґР°РІР°С‚СЊ СЃРёРіРЅР°Р» РЅР° 1 РёРјСѓР»СЊСЃ РґСЂР°Р№РІРµСЂР°. Р—Р°РІРёСЃРёС‚ РѕС‚ С‡Р°СЃС‚РѕС‚С‹ СЃРёРіРЅР°Р»Р° Рё СЂР°Р·СЂРµС€Р°СЋС‰РµР№ СЃРїРѕСЃРѕР±РЅРѕСЃС‚Рё РїР»Р°С‚С‹ СѓРїСЂР°РІР»РµРЅРёСЏ
 
 
 struct Struct_Manipul_ServoMotor
 {
-	byte port;	 //Порт платы драйвера управления сервомоторами
-	byte pin;	 //Аналоговый Пин на котороый обратная связь от потенциометра
-	int ugol;    //Угол на который поворачивается мотор
-	int ugol_max;    //Угол на который МОЖНО поворачиваеть мотор в ПЛЮС
-	int ugol_min;    //Угол на который МОЖНО поворачиваеть мотор в ПЛЮС
-	int min_impuls;				 //Минимальный имульс по дадашиту примерно 500 
-	int max_impuls;				 //Максимальный импульс	 по дадашиту  примерно 2500
-	float position_raschet;			//Текущее положение		оно же 	Начальное положение при инициализации (запуске)  в градусах	
-	float position_target;		//Положение в которое надо перемститься	  в градусах
-	float position_potenciometr;		//Положение по данным потенциометра	  в градусах
-	int min_potenciom;	   // Значение понециометра для данного моторчика
-	int max_potenciom;   // Значение понециометра для данного моторчика
+	byte port;	 //РџРѕСЂС‚ РїР»Р°С‚С‹ РґСЂР°Р№РІРµСЂР° СѓРїСЂР°РІР»РµРЅРёСЏ СЃРµСЂРІРѕРјРѕС‚РѕСЂР°РјРё
+	byte pin;	 //РђРЅР°Р»РѕРіРѕРІС‹Р№ РџРёРЅ РЅР° РєРѕС‚РѕСЂРѕС‹Р№ РѕР±СЂР°С‚РЅР°СЏ СЃРІСЏР·СЊ РѕС‚ РїРѕС‚РµРЅС†РёРѕРјРµС‚СЂР°
+	int ugol;    //РЈРіРѕР» РЅР° РєРѕС‚РѕСЂС‹Р№ РїРѕРІРѕСЂР°С‡РёРІР°РµС‚СЃСЏ РјРѕС‚РѕСЂ
+	int ugol_max;    //РЈРіРѕР» РЅР° РєРѕС‚РѕСЂС‹Р№ РњРћР–РќРћ РїРѕРІРѕСЂР°С‡РёРІР°РµС‚СЊ РјРѕС‚РѕСЂ РІ РџР›Р®РЎ
+	int ugol_min;    //РЈРіРѕР» РЅР° РєРѕС‚РѕСЂС‹Р№ РњРћР–РќРћ РїРѕРІРѕСЂР°С‡РёРІР°РµС‚СЊ РјРѕС‚РѕСЂ РІ РџР›Р®РЎ
+	int min_impuls;				 //РњРёРЅРёРјР°Р»СЊРЅС‹Р№ РёРјСѓР»СЊСЃ РїРѕ РґР°РґР°С€РёС‚Сѓ РїСЂРёРјРµСЂРЅРѕ 500 
+	int max_impuls;				 //РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ РёРјРїСѓР»СЊСЃ	 РїРѕ РґР°РґР°С€РёС‚Сѓ  РїСЂРёРјРµСЂРЅРѕ 2500
+	float position_raschet;			//РўРµРєСѓС‰РµРµ РїРѕР»РѕР¶РµРЅРёРµ		РѕРЅРѕ Р¶Рµ 	РќР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ РїСЂРё РёРЅРёС†РёР°Р»РёР·Р°С†РёРё (Р·Р°РїСѓСЃРєРµ)  РІ РіСЂР°РґСѓСЃР°С…	
+	float position_target;		//РџРѕР»РѕР¶РµРЅРёРµ РІ РєРѕС‚РѕСЂРѕРµ РЅР°РґРѕ РїРµСЂРµРјСЃС‚РёС‚СЊСЃСЏ	  РІ РіСЂР°РґСѓСЃР°С…
+	float position_potenciometr;		//РџРѕР»РѕР¶РµРЅРёРµ РїРѕ РґР°РЅРЅС‹Рј РїРѕС‚РµРЅС†РёРѕРјРµС‚СЂР°	  РІ РіСЂР°РґСѓСЃР°С…
+	int min_potenciom;	   // Р—РЅР°С‡РµРЅРёРµ РїРѕРЅРµС†РёРѕРјРµС‚СЂР° РґР»СЏ РґР°РЅРЅРѕРіРѕ РјРѕС‚РѕСЂС‡РёРєР°
+	int max_potenciom;   // Р—РЅР°С‡РµРЅРёРµ РїРѕРЅРµС†РёРѕРјРµС‚СЂР° РґР»СЏ РґР°РЅРЅРѕРіРѕ РјРѕС‚РѕСЂС‡РёРєР°
 
-	float time_pulse = 0;		   //Время дня поворота на 1 градус
+	float time_pulse = 0;		   //Р’СЂРµРјСЏ РґРЅСЏ РїРѕРІРѕСЂРѕС‚Р° РЅР° 1 РіСЂР°РґСѓСЃ
 
-	int SERVOMIN;                 // Минимальное положение 	 считаем как	 500 / (1000000/60/4096)  в имульсах драйвера
-	int SERVOMAX;	              // Максимальное положение 	 считаем как	 1000000/60/4096*2500	 в имульсах драйвера
-	int SERVOSER;	              // Среднее  положение 	0 градусов  	 в имульсах драйвера
-	int SERVOTEK;	              // Текущее  положение 	 в имульсах драйвера
-	int SERVOZAD;	              // Заданное положение 	 в имульсах драйвера
-	float SERVOTIME;		      //изменение положения для дня поворота на 1 градус  в имульсах драйвера
+	int SERVOMIN;                 // РњРёРЅРёРјР°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ 	 СЃС‡РёС‚Р°РµРј РєР°Рє	 500 / (1000000/60/4096)  РІ РёРјСѓР»СЊСЃР°С… РґСЂР°Р№РІРµСЂР°
+	int SERVOMAX;	              // РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ 	 СЃС‡РёС‚Р°РµРј РєР°Рє	 1000000/60/4096*2500	 РІ РёРјСѓР»СЊСЃР°С… РґСЂР°Р№РІРµСЂР°
+	int SERVOSER;	              // РЎСЂРµРґРЅРµРµ  РїРѕР»РѕР¶РµРЅРёРµ 	0 РіСЂР°РґСѓСЃРѕРІ  	 РІ РёРјСѓР»СЊСЃР°С… РґСЂР°Р№РІРµСЂР°
+	int SERVOTEK;	              // РўРµРєСѓС‰РµРµ  РїРѕР»РѕР¶РµРЅРёРµ 	 РІ РёРјСѓР»СЊСЃР°С… РґСЂР°Р№РІРµСЂР°
+	int SERVOZAD;	              // Р—Р°РґР°РЅРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ 	 РІ РёРјСѓР»СЊСЃР°С… РґСЂР°Р№РІРµСЂР°
+	float SERVOTIME;		      //РёР·РјРµРЅРµРЅРёРµ РїРѕР»РѕР¶РµРЅРёСЏ РґР»СЏ РґРЅСЏ РїРѕРІРѕСЂРѕС‚Р° РЅР° 1 РіСЂР°РґСѓСЃ  РІ РёРјСѓР»СЊСЃР°С… РґСЂР°Р№РІРµСЂР°
 
-	long time_izmen = 0;                // время когда менали последний раз угол
+	long time_izmen = 0;                // РІСЂРµРјСЏ РєРѕРіРґР° РјРµРЅР°Р»Рё РїРѕСЃР»РµРґРЅРёР№ СЂР°Р· СѓРіРѕР»
 };
 
-byte const col_mot = 5;   // Кол-во моторов на манипуляторе
+byte const col_mot = 5;   // РљРѕР»-РІРѕ РјРѕС‚РѕСЂРѕРІ РЅР° РјР°РЅРёРїСѓР»СЏС‚РѕСЂРµ
 
-Struct_Manipul_ServoMotor Manipul[col_mot];		  // Массив на 6 моторчиков
+Struct_Manipul_ServoMotor Manipul[col_mot];		  // РњР°СЃСЃРёРІ РЅР° 6 РјРѕС‚РѕСЂС‡РёРєРѕРІ
 
 
 
@@ -55,12 +55,12 @@ void set_servo_Position(byte num_servo, float gradus)
 }
 void set_servo_Position_speed(byte num_servo, int8_t speed_, float koeff_)
 {
-	float gradus = Manipul[num_servo].position_target + speed_ * koeff_;		// Берем старый угол и увеличиваем его на некорую величину пророрционально показанийя джойстика и коэффициента
-	if (gradus > Manipul[num_servo].ugol_max)		  // Если угол превышаем максимум тогда ограничиваем угол
+	float gradus = Manipul[num_servo].position_target + speed_ * koeff_;		// Р‘РµСЂРµРј СЃС‚Р°СЂС‹Р№ СѓРіРѕР» Рё СѓРІРµР»РёС‡РёРІР°РµРј РµРіРѕ РЅР° РЅРµРєРѕСЂСѓСЋ РІРµР»РёС‡РёРЅСѓ РїСЂРѕСЂРѕСЂС†РёРѕРЅР°Р»СЊРЅРѕ РїРѕРєР°Р·Р°РЅРёР№СЏ РґР¶РѕР№СЃС‚РёРєР° Рё РєРѕСЌС„С„РёС†РёРµРЅС‚Р°
+	if (gradus > Manipul[num_servo].ugol_max)		  // Р•СЃР»Рё СѓРіРѕР» РїСЂРµРІС‹С€Р°РµРј РјР°РєСЃРёРјСѓРј С‚РѕРіРґР° РѕРіСЂР°РЅРёС‡РёРІР°РµРј СѓРіРѕР»
 	{
 		gradus = Manipul[num_servo].ugol_max;
 	}
-	if (gradus < Manipul[num_servo].ugol_min)		  // Если угол превышаем максимум тогда ограничиваем угол
+	if (gradus < Manipul[num_servo].ugol_min)		  // Р•СЃР»Рё СѓРіРѕР» РїСЂРµРІС‹С€Р°РµРј РјР°РєСЃРёРјСѓРј С‚РѕРіРґР° РѕРіСЂР°РЅРёС‡РёРІР°РµРј СѓРіРѕР»
 	{
 		gradus = Manipul[num_servo].ugol_min;
 	}
@@ -71,23 +71,23 @@ void set_servo_Position_speed(byte num_servo, int8_t speed_, float koeff_)
 }
 
 
-void set_servo_Position_time(byte num_servo, float gradus, float time) // время в секундах
+void set_servo_Position_time(byte num_servo, float gradus, float time) // РІСЂРµРјСЏ РІ СЃРµРєСѓРЅРґР°С…
 {
 	//Serial.print(" num_servo= ");	Serial.println(num_servo);
 	//Serial.print(" SERVOTIME= ");	Serial.println(Manipul[num_servo].SERVOTIME);
 	//Serial.print(" SERVOTEK= ");	Serial.println(Manipul[num_servo].SERVOTEK);
 	float dif_pulse = abs((gradus - Manipul[num_servo].position_raschet) * Manipul[num_servo].SERVOTIME);
 	//Serial.print(" dif_pulse= ");	Serial.println(dif_pulse);
-	Manipul[num_servo].time_pulse = (time * 1000000) / dif_pulse;		   //Время межу импульсами при увеличении уменьшении на 1 импульс
+	Manipul[num_servo].time_pulse = (time * 1000000) / dif_pulse;		   //Р’СЂРµРјСЏ РјРµР¶Сѓ РёРјРїСѓР»СЊСЃР°РјРё РїСЂРё СѓРІРµР»РёС‡РµРЅРёРё СѓРјРµРЅСЊС€РµРЅРёРё РЅР° 1 РёРјРїСѓР»СЊСЃ
 	//Serial.print(" time_pulse= ");	Serial.println(Manipul[num_servo].time_pulse);
 
-	Manipul[num_servo].position_target = gradus;			  //Задаем новое положение	  в градусах
+	Manipul[num_servo].position_target = gradus;			  //Р—Р°РґР°РµРј РЅРѕРІРѕРµ РїРѕР»РѕР¶РµРЅРёРµ	  РІ РіСЂР°РґСѓСЃР°С…
 	Manipul[num_servo].SERVOZAD = Manipul[num_servo].SERVOSER - (gradus * Manipul[num_servo].SERVOTIME);
-	Manipul[num_servo].time_izmen = micros();  // Запоминаем время в которое была дана команда
+	Manipul[num_servo].time_izmen = micros();  // Р—Р°РїРѕРјРёРЅР°РµРј РІСЂРµРјСЏ РІ РєРѕС‚РѕСЂРѕРµ Р±С‹Р»Р° РґР°РЅР° РєРѕРјР°РЅРґР°
 
 }
 
-//     Номер порта, пин на котором управление серво, на какой угол поворачивется серво, минимальный интервал сигнала в микросекундах (500), минимальное значение потенциометра при минимальном сигнале, максимальное значение потенциометра прои макисмльном сигнале 2500
+//     РќРѕРјРµСЂ РїРѕСЂС‚Р°, РїРёРЅ РЅР° РєРѕС‚РѕСЂРѕРј СѓРїСЂР°РІР»РµРЅРёРµ СЃРµСЂРІРѕ, РЅР° РєР°РєРѕР№ СѓРіРѕР» РїРѕРІРѕСЂР°С‡РёРІРµС‚СЃСЏ СЃРµСЂРІРѕ, РјРёРЅРёРјР°Р»СЊРЅС‹Р№ РёРЅС‚РµСЂРІР°Р» СЃРёРіРЅР°Р»Р° РІ РјРёРєСЂРѕСЃРµРєСѓРЅРґР°С… (500), РјРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РїРѕС‚РµРЅС†РёРѕРјРµС‚СЂР° РїСЂРё РјРёРЅРёРјР°Р»СЊРЅРѕРј СЃРёРіРЅР°Р»Рµ, РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РїРѕС‚РµРЅС†РёРѕРјРµС‚СЂР° РїСЂРѕРё РјР°РєРёСЃРјР»СЊРЅРѕРј СЃРёРіРЅР°Р»Рµ 2500
 void setServoConfig(byte port_, byte pin_, int ugol_, int ugol_max_, int ugol_min_, int min_pulse_, int min_potenciom_, int max_potenciom_)
 {
 	Manipul[port_].port = port_;
@@ -109,12 +109,12 @@ void setServoConfig(byte port_, byte pin_, int ugol_, int ugol_max_, int ugol_mi
 	int zn = 0;
 	zn = analogRead(Manipul[port_].pin);
 
-	Serial.print("setServoConfig port");Serial.print(port_);Serial.print(" = "); Serial.print(zn);    // Аналоговый вход для считывания положения сервомотора
+	Serial.print("setServoConfig port");Serial.print(port_);Serial.print(" = "); Serial.print(zn);    // РђРЅР°Р»РѕРіРѕРІС‹Р№ РІС…РѕРґ РґР»СЏ СЃС‡РёС‚С‹РІР°РЅРёСЏ РїРѕР»РѕР¶РµРЅРёСЏ СЃРµСЂРІРѕРјРѕС‚РѕСЂР°
 
 	Manipul[port_].position_potenciometr = map(zn, min_potenciom_, max_potenciom_, Manipul[port_].ugol / 2, -Manipul[port_].ugol / 2);;
-	Manipul[port_].position_raschet = Manipul[port_].position_potenciometr;   // При начальном запуске расчетное равно измеренное по потенциометру
+	Manipul[port_].position_raschet = Manipul[port_].position_potenciometr;   // РџСЂРё РЅР°С‡Р°Р»СЊРЅРѕРј Р·Р°РїСѓСЃРєРµ СЂР°СЃС‡РµС‚РЅРѕРµ СЂР°РІРЅРѕ РёР·РјРµСЂРµРЅРЅРѕРµ РїРѕ РїРѕС‚РµРЅС†РёРѕРјРµС‚СЂСѓ
 	Manipul[port_].SERVOTEK = Manipul[port_].SERVOSER - (Manipul[port_].position_raschet * Manipul[port_].SERVOTIME);
-	Serial.print(" Start Angle = "); Serial.println(Manipul[port_].position_raschet);    // Аналоговый вход для считывания положения сервомотора
+	Serial.print(" Start Angle = "); Serial.println(Manipul[port_].position_raschet);    // РђРЅР°Р»РѕРіРѕРІС‹Р№ РІС…РѕРґ РґР»СЏ СЃС‡РёС‚С‹РІР°РЅРёСЏ РїРѕР»РѕР¶РµРЅРёСЏ СЃРµСЂРІРѕРјРѕС‚РѕСЂР°
 
 }
 void Read_AnalogPort()
@@ -129,22 +129,22 @@ void Read_AnalogPort()
 		zn = zn / 3;
 		
 		Manipul[port].position_potenciometr = map(zn, Manipul[port].min_potenciom, Manipul[port].max_potenciom, Manipul[port].ugol *0.5, -Manipul[port].ugol *0.5);
-	//	Manipul[port].position_potenciometr = Manipul[port].position_potenciometr*0.0 + temp_position * 1.0;  //Сглаживаем значение
+	//	Manipul[port].position_potenciometr = Manipul[port].position_potenciometr*0.0 + temp_position * 1.0;  //РЎРіР»Р°Р¶РёРІР°РµРј Р·РЅР°С‡РµРЅРёРµ
 		if (port == 3)
 		{
-			//Serial.print(" ");Serial.print(port);Serial.print(" = "); Serial.print(zn);    // Аналоговый вход для считывания положения сервомотора
-			//Serial.print(" = "); Serial.println(Manipul[port].position_potenciometr);    // Аналоговый вход для считывания положения сервомотора
+			//Serial.print(" ");Serial.print(port);Serial.print(" = "); Serial.print(zn);    // РђРЅР°Р»РѕРіРѕРІС‹Р№ РІС…РѕРґ РґР»СЏ СЃС‡РёС‚С‹РІР°РЅРёСЏ РїРѕР»РѕР¶РµРЅРёСЏ СЃРµСЂРІРѕРјРѕС‚РѕСЂР°
+			//Serial.print(" = "); Serial.println(Manipul[port].position_potenciometr);    // РђРЅР°Р»РѕРіРѕРІС‹Р№ РІС…РѕРґ РґР»СЏ СЃС‡РёС‚С‹РІР°РЅРёСЏ РїРѕР»РѕР¶РµРЅРёСЏ СЃРµСЂРІРѕРјРѕС‚РѕСЂР°
 		}
 	}
 }
 void Init_Manipul()
 {
 	Serial.println("Set Init_Manipul");
-	pwm.begin();				//ТУт перезагрузка и отключение дополнительных ардесов по i2c 0x70
-	pwm.setPWMFreq(SERVO_FREQ);  // Частота следования импульсов 60 Гц
+	pwm.begin();				//РўРЈС‚ РїРµСЂРµР·Р°РіСЂСѓР·РєР° Рё РѕС‚РєР»СЋС‡РµРЅРёРµ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹С… Р°СЂРґРµСЃРѕРІ РїРѕ i2c 0x70
+	pwm.setPWMFreq(SERVO_FREQ);  // Р§Р°СЃС‚РѕС‚Р° СЃР»РµРґРѕРІР°РЅРёСЏ РёРјРїСѓР»СЊСЃРѕРІ 60 Р“С†
 	
 	Serial.println("Set PIN");
-	pinMode(PIN__A0, INPUT);  analogRead(PIN__A0);	  // Нужно сразу считать порт т.к. чтение порта как-то влияет на потенцитометр и он может немного дергаться.
+	pinMode(PIN__A0, INPUT);  analogRead(PIN__A0);	  // РќСѓР¶РЅРѕ СЃСЂР°Р·Сѓ СЃС‡РёС‚Р°С‚СЊ РїРѕСЂС‚ С‚.Рє. С‡С‚РµРЅРёРµ РїРѕСЂС‚Р° РєР°Рє-С‚Рѕ РІР»РёСЏРµС‚ РЅР° РїРѕС‚РµРЅС†РёС‚РѕРјРµС‚СЂ Рё РѕРЅ РјРѕР¶РµС‚ РЅРµРјРЅРѕРіРѕ РґРµСЂРіР°С‚СЊСЃСЏ.
 	pinMode(PIN__A1, INPUT);  analogRead(PIN__A1);
 	pinMode(PIN__A2, INPUT);  analogRead(PIN__A2);
 	pinMode(PIN__A3, INPUT);  analogRead(PIN__A3);
@@ -152,7 +152,7 @@ void Init_Manipul()
 
 	delay(500);
 
-	// Моторчик основание вертеть
+	// РњРѕС‚РѕСЂС‡РёРє РѕСЃРЅРѕРІР°РЅРёРµ РІРµСЂС‚РµС‚СЊ
 	Serial.println("Set config");
 	setServoConfig(0, PIN__A0, 270, 135, -135, 530, 55, 595);
 	setServoConfig(1, PIN__A1, 270, 100, -100, 510, 560, 30);
@@ -164,19 +164,19 @@ void Init_Manipul()
 	Read_AnalogPort();
 
 	Serial.println("Set start position");
-	//set_servo_Position(0, 60);   // 	Встаем в начальное положение  с максимальной скоростью
-	//set_servo_Position(1, 60);   // 	Встаем в начальное положение  с максимальной скоростью
+	//set_servo_Position(0, 60);   // 	Р’СЃС‚Р°РµРј РІ РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ  СЃ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ СЃРєРѕСЂРѕСЃС‚СЊСЋ
+	//set_servo_Position(1, 60);   // 	Р’СЃС‚Р°РµРј РІ РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ  СЃ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ СЃРєРѕСЂРѕСЃС‚СЊСЋ
 	//delay(2000);
-	set_servo_Position_time(0, 0, 3);	 //Команда встать в заданное начальное положение за нужное время в лупе
-	set_servo_Position_time(1, 30, 3);	 //Команда встать в заданное начальное положение за нужное время в лупе
-	set_servo_Position_time(2, -60, 3);	 //Команда встать в заданное начальное положение за нужное время в лупе
-	set_servo_Position_time(3, 30, 3);	 //Команда встать в заданное начальное положение за нужное время в лупе
-	set_servo_Position_time(4, 0, 3);	 //Команда встать в заданное начальное положение за нужное время в лупе
+	set_servo_Position_time(0, 0, 3);	 //РљРѕРјР°РЅРґР° РІСЃС‚Р°С‚СЊ РІ Р·Р°РґР°РЅРЅРѕРµ РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ Р·Р° РЅСѓР¶РЅРѕРµ РІСЂРµРјСЏ РІ Р»СѓРїРµ
+	set_servo_Position_time(1, 30, 3);	 //РљРѕРјР°РЅРґР° РІСЃС‚Р°С‚СЊ РІ Р·Р°РґР°РЅРЅРѕРµ РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ Р·Р° РЅСѓР¶РЅРѕРµ РІСЂРµРјСЏ РІ Р»СѓРїРµ
+	set_servo_Position_time(2, -60, 3);	 //РљРѕРјР°РЅРґР° РІСЃС‚Р°С‚СЊ РІ Р·Р°РґР°РЅРЅРѕРµ РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ Р·Р° РЅСѓР¶РЅРѕРµ РІСЂРµРјСЏ РІ Р»СѓРїРµ
+	set_servo_Position_time(3, 30, 3);	 //РљРѕРјР°РЅРґР° РІСЃС‚Р°С‚СЊ РІ Р·Р°РґР°РЅРЅРѕРµ РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ Р·Р° РЅСѓР¶РЅРѕРµ РІСЂРµРјСЏ РІ Р»СѓРїРµ
+	set_servo_Position_time(4, 0, 3);	 //РљРѕРјР°РЅРґР° РІСЃС‚Р°С‚СЊ РІ Р·Р°РґР°РЅРЅРѕРµ РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ Р·Р° РЅСѓР¶РЅРѕРµ РІСЂРµРјСЏ РІ Р»СѓРїРµ
 
 	//delay(1000);
 	//Read_AnalogPort();
 
-	//set_servo_Position_time(1, 0, 2);	 //Команда встать в заданное начальное положение за нужное время в лупе
+	//set_servo_Position_time(1, 0, 2);	 //РљРѕРјР°РЅРґР° РІСЃС‚Р°С‚СЊ РІ Р·Р°РґР°РЅРЅРѕРµ РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ Р·Р° РЅСѓР¶РЅРѕРµ РІСЂРµРјСЏ РІ Р»СѓРїРµ
 
 
 	//delay(100000000000000);
@@ -186,26 +186,26 @@ void Loop_Manipul()
 {
 	for (byte i = 0; i < 2; i++)
 	{
-		if (Manipul[i].SERVOTEK != Manipul[i].SERVOZAD)	   //Если положение не совпадает, тогда
+		if (Manipul[i].SERVOTEK != Manipul[i].SERVOZAD)	   //Р•СЃР»Рё РїРѕР»РѕР¶РµРЅРёРµ РЅРµ СЃРѕРІРїР°РґР°РµС‚, С‚РѕРіРґР°
 		{
-			if (micros() - Manipul[i].time_izmen > Manipul[i].time_pulse)			 // если время с прошлого изменения угла больше чем время шага
+			if (micros() - Manipul[i].time_izmen > Manipul[i].time_pulse)			 // РµСЃР»Рё РІСЂРµРјСЏ СЃ РїСЂРѕС€Р»РѕРіРѕ РёР·РјРµРЅРµРЅРёСЏ СѓРіР»Р° Р±РѕР»СЊС€Рµ С‡РµРј РІСЂРµРјСЏ С€Р°РіР°
 			{
-				Manipul[i].time_izmen = micros();					 //Запоминаем время изменения угла
+				Manipul[i].time_izmen = micros();					 //Р—Р°РїРѕРјРёРЅР°РµРј РІСЂРµРјСЏ РёР·РјРµРЅРµРЅРёСЏ СѓРіР»Р°
 				//Serial.print(" time= ");Serial.print(i); Serial.print("  ");	Serial.println(Manipul[i].time_izmen);
 				if (Manipul[i].SERVOZAD > Manipul[i].SERVOTEK)
 				{
-					Manipul[i].SERVOTEK++;      // увеличиваем на 1 градус
+					Manipul[i].SERVOTEK++;      // СѓРІРµР»РёС‡РёРІР°РµРј РЅР° 1 РіСЂР°РґСѓСЃ
 				}
 				else
 				{
-					Manipul[i].SERVOTEK--;      // уменьшаем на 1 градус
+					Manipul[i].SERVOTEK--;      // СѓРјРµРЅСЊС€Р°РµРј РЅР° 1 РіСЂР°РґСѓСЃ
 				}
-				pwm.setPWM(i, 0, Manipul[i].SERVOTEK);			  // даем команду  на поворот на 1 импульс
-				Manipul[i].position_raschet = (Manipul[i].SERVOSER - Manipul[i].SERVOTEK) / Manipul[i].SERVOTIME;	//вычисляем положение в градусах
+				pwm.setPWM(i, 0, Manipul[i].SERVOTEK);			  // РґР°РµРј РєРѕРјР°РЅРґСѓ  РЅР° РїРѕРІРѕСЂРѕС‚ РЅР° 1 РёРјРїСѓР»СЊСЃ
+				Manipul[i].position_raschet = (Manipul[i].SERVOSER - Manipul[i].SERVOTEK) / Manipul[i].SERVOTIME;	//РІС‹С‡РёСЃР»СЏРµРј РїРѕР»РѕР¶РµРЅРёРµ РІ РіСЂР°РґСѓСЃР°С…
 				float zn = analogRead(Manipul[i].pin);
-				Serial.print("port");Serial.print(i);Serial.print(" = "); Serial.print(zn);    // Аналоговый вход для считывания положения сервомотора
+				Serial.print("port");Serial.print(i);Serial.print(" = "); Serial.print(zn);    // РђРЅР°Р»РѕРіРѕРІС‹Р№ РІС…РѕРґ РґР»СЏ СЃС‡РёС‚С‹РІР°РЅРёСЏ РїРѕР»РѕР¶РµРЅРёСЏ СЃРµСЂРІРѕРјРѕС‚РѕСЂР°
 				float zd = map(zn, 50, 600, 135, -135);
-				Serial.print(" Angle = "); Serial.print(zd);    // Аналоговый вход для считывания положения сервомотора
+				Serial.print(" Angle = "); Serial.print(zd);    // РђРЅР°Р»РѕРіРѕРІС‹Р№ РІС…РѕРґ РґР»СЏ СЃС‡РёС‚С‹РІР°РЅРёСЏ РїРѕР»РѕР¶РµРЅРёСЏ СЃРµСЂРІРѕРјРѕС‚РѕСЂР°
 
 				Serial.print(" position_raschet= ");	Serial.println(Manipul[i].position_raschet);
 
@@ -217,7 +217,7 @@ void setStartTimeIzmen()
 {
 	for (byte i = 0; i < col_mot; i++)
 	{
-		Manipul[i].time_izmen = micros();	//Устанавливаем время команды в самом конце сетапа перед лупом
+		Manipul[i].time_izmen = micros();	//РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РІСЂРµРјСЏ РєРѕРјР°РЅРґС‹ РІ СЃР°РјРѕРј РєРѕРЅС†Рµ СЃРµС‚Р°РїР° РїРµСЂРµРґ Р»СѓРїРѕРј
 	}
 }
 
@@ -225,7 +225,7 @@ void Loop_Manipul2()
 {
 	for (byte i = 0; i < col_mot; i++)
 	{
-		if (Manipul[i].SERVOTEK != Manipul[i].SERVOZAD)	   //Если положение не совпадает, тогда
+		if (Manipul[i].SERVOTEK != Manipul[i].SERVOZAD)	   //Р•СЃР»Рё РїРѕР»РѕР¶РµРЅРёРµ РЅРµ СЃРѕРІРїР°РґР°РµС‚, С‚РѕРіРґР°
 		{
 			long time_proshlo = micros() - Manipul[i].time_izmen;
 			//Serial.print(" time_proshlo = "); Serial.println(time_proshlo);
@@ -272,53 +272,53 @@ void Loop_Manipul2()
 
 void Control_Manipul()
 {
-	if (millis() - time_send > 50)   // Считываем 1 раз в 50 милисекунд   время исполнения примерно 2 милимекунды
+	if (millis() - time_send > 50)   // РЎС‡РёС‚С‹РІР°РµРј 1 СЂР°Р· РІ 50 РјРёР»РёСЃРµРєСѓРЅРґ   РІСЂРµРјСЏ РёСЃРїРѕР»РЅРµРЅРёСЏ РїСЂРёРјРµСЂРЅРѕ 2 РјРёР»РёРјРµРєСѓРЅРґС‹
 	{
 		long a = micros();
 		time_send = millis();
-		read_djiystik();  // Считыывание данных из дройстика. 9 байт все регистры положений
+		read_djiystik();  // РЎС‡РёС‚С‹С‹РІР°РЅРёРµ РґР°РЅРЅС‹С… РёР· РґСЂРѕР№СЃС‚РёРєР°. 9 Р±Р°Р№С‚ РІСЃРµ СЂРµРіРёСЃС‚СЂС‹ РїРѕР»РѕР¶РµРЅРёР№
 		long c = micros();
 		Serial.print(" time_read_data_djiystik= "); Serial.println(c - a);
 
-		if (reg7 == 0 )			   // Кнопка на правом джойстике   СЖАТЬ
+		if (reg7 == 0 )			   // РљРЅРѕРїРєР° РЅР° РїСЂР°РІРѕРј РґР¶РѕР№СЃС‚РёРєРµ   РЎР–РђРўР¬
 		{
 			set_servo_Position_speed(4, -100, kReg5);
 		}
-		if (reg9 == 0)			   // Кнопка на правом джойстике   РАЗЖАТЬ
+		if (reg9 == 0)			   // РљРЅРѕРїРєР° РЅР° РїСЂР°РІРѕРј РґР¶РѕР№СЃС‚РёРєРµ   Р РђР—Р–РђРўР¬
 		{
 			set_servo_Position_speed(4, 100, kReg5);
 		}
 
-		if (reg8 == 0)			   // Кнопка на среднеи джойстике
+		if (reg8 == 0)			   // РљРЅРѕРїРєР° РЅР° СЃСЂРµРґРЅРµРё РґР¶РѕР№СЃС‚РёРєРµ
 		{
 			pip(1000);
-			set_servo_Position_time(0, 0, 2);// Возвращение в нулевую позицию за 2 секунды
+			set_servo_Position_time(0, 0, 2);// Р’РѕР·РІСЂР°С‰РµРЅРёРµ РІ РЅСѓР»РµРІСѓСЋ РїРѕР·РёС†РёСЋ Р·Р° 2 СЃРµРєСѓРЅРґС‹
 			set_servo_Position_time(1, 0, 2);
 
 		}
 
-		if (reg2 > 5 || reg2 < -5)        //ОСНОВАНИЕ Если изменения по джойстику значительны а не около нуля мертвая зона от -5 до 5
+		if (reg2 > 5 || reg2 < -5)        //РћРЎРќРћР’РђРќРР• Р•СЃР»Рё РёР·РјРµРЅРµРЅРёСЏ РїРѕ РґР¶РѕР№СЃС‚РёРєСѓ Р·РЅР°С‡РёС‚РµР»СЊРЅС‹ Р° РЅРµ РѕРєРѕР»Рѕ РЅСѓР»СЏ РјРµСЂС‚РІР°СЏ Р·РѕРЅР° РѕС‚ -5 РґРѕ 5
 		{
 			set_servo_Position_speed(0, reg2, kReg2);
 		}						                                                                                                                                                                                                     
 
-		if (reg1 > 5 || reg1 < -5)        // 1 мотор Если изменения по джойстику значительны а не около нуля мертвая зона от -5 до 5
+		if (reg1 > 5 || reg1 < -5)        // 1 РјРѕС‚РѕСЂ Р•СЃР»Рё РёР·РјРµРЅРµРЅРёСЏ РїРѕ РґР¶РѕР№СЃС‚РёРєСѓ Р·РЅР°С‡РёС‚РµР»СЊРЅС‹ Р° РЅРµ РѕРєРѕР»Рѕ РЅСѓР»СЏ РјРµСЂС‚РІР°СЏ Р·РѕРЅР° РѕС‚ -5 РґРѕ 5
 		{
 			set_servo_Position_speed(1, reg1, kReg1);
 		}
-		if (reg3 > 5 || reg3 < -5)        // 2 мотор Если изменения по джойстику значительны а не около нуля мертвая зона от -5 до 5
+		if (reg3 > 5 || reg3 < -5)        // 2 РјРѕС‚РѕСЂ Р•СЃР»Рё РёР·РјРµРЅРµРЅРёСЏ РїРѕ РґР¶РѕР№СЃС‚РёРєСѓ Р·РЅР°С‡РёС‚РµР»СЊРЅС‹ Р° РЅРµ РѕРєРѕР»Рѕ РЅСѓР»СЏ РјРµСЂС‚РІР°СЏ Р·РѕРЅР° РѕС‚ -5 РґРѕ 5
 		{
 			set_servo_Position_speed(2, reg3, kReg3);
 		}
-		if (reg5 > 5 || reg5 < -5)        // 2 мотор Если изменения по джойстику значительны а не около нуля мертвая зона от -5 до 5
+		if (reg5 > 5 || reg5 < -5)        // 2 РјРѕС‚РѕСЂ Р•СЃР»Рё РёР·РјРµРЅРµРЅРёСЏ РїРѕ РґР¶РѕР№СЃС‚РёРєСѓ Р·РЅР°С‡РёС‚РµР»СЊРЅС‹ Р° РЅРµ РѕРєРѕР»Рѕ РЅСѓР»СЏ РјРµСЂС‚РІР°СЏ Р·РѕРЅР° РѕС‚ -5 РґРѕ 5
 		{
 			set_servo_Position_speed(3, reg5, kReg4);
 		}
-		if (reg6 > 5 || reg6 < -5)        // 2 мотор Если изменения по джойстику значительны а не около нуля мертвая зона от -5 до 5
+		if (reg6 > 5 || reg6 < -5)        // 2 РјРѕС‚РѕСЂ Р•СЃР»Рё РёР·РјРµРЅРµРЅРёСЏ РїРѕ РґР¶РѕР№СЃС‚РёРєСѓ Р·РЅР°С‡РёС‚РµР»СЊРЅС‹ Р° РЅРµ РѕРєРѕР»Рѕ РЅСѓР»СЏ РјРµСЂС‚РІР°СЏ Р·РѕРЅР° РѕС‚ -5 РґРѕ 5
 		{
 		}
 
-		print_djoistik();   // Печать данных которые получили
+		print_djoistik();   // РџРµС‡Р°С‚СЊ РґР°РЅРЅС‹С… РєРѕС‚РѕСЂС‹Рµ РїРѕР»СѓС‡РёР»Рё
 	}
 
 }
